@@ -1,11 +1,16 @@
 inventario = {}
 
 def cargar_inventario():
+    """
+    Carga el inventario inicial desde un archivo. 
+    El formato del archivo debe ser:
+    crear_producto <nombre>;<cantidad>;<precio_unitario>;<ubicacion>
+    """
     print("Carga del inventario inicial")
     archivo = input("Ingrese la ruta del archivo: ")
 
     try:
-        with open(archivo, 'r', encoding='utf-8') as f:  # Añadido encoding
+        with open(archivo, 'r', encoding='utf-8') as f:
             lineas = f.readlines()
 
         for linea in lineas:
@@ -30,18 +35,24 @@ def cargar_inventario():
         print("Ocurrió un error al cargar el inventario:", str(e))
 
 def cargar_instrucciones():
+    """
+    Carga las instrucciones de movimiento desde un archivo. 
+    El formato del archivo debe ser:
+    agregar_stock <nombre>;<cantidad>;<ubicacion>
+    o
+    vender_producto <nombre>;<cantidad>;<ubicacion>
+    """
     print("Carga las instrucciones de movimiento")
     archivo = input("Ingrese la ruta del archivo:  ")
 
     try:
-        with open(archivo, 'r', encoding='utf-8') as f:  # Añadido encoding
+        with open(archivo, 'r', encoding='utf-8') as f:
             lineas = f.readlines()
 
         for linea in lineas:
             instruccion, datos = linea.strip().split(' ', 1)
             nombre, cantidad, ubicacion = datos.split(';')
             clave = (nombre, ubicacion)
-            # Validación añadida aquí:
             if "." in cantidad:
                 print(f"Advertencia: La cantidad para '{nombre}' en '{ubicacion}' no es un número entero. Movimiento no realizado.")
                 continue
@@ -66,7 +77,10 @@ def cargar_instrucciones():
         print("Ocurrió un error al procesar las instrucciones:", str(e))
 
 def crear_InformeInventario():
-    with open("informe.txt", "w", encoding='utf-8') as informe_file:  # Añadido encoding
+    """
+    Genera un informe basado en el inventario actual y lo guarda en 'informe.txt'.
+    """
+    with open("informe.txt", "w", encoding='utf-8') as informe_file:
         informe_file.write("Informe de Inventario:\n")
         informe_file.write("Producto\tUbicación\tCantidad\tPrecio Unitario\tValor Total\n")
         informe_file.write("-" * 90 + "\n")
@@ -82,6 +96,9 @@ def crear_InformeInventario():
         print("\n¡Informe generado y guardado en 'informe.txt'!")
 
 def salir_programa():
+    """
+    Sale del programa.
+    """
     print("----- Saliendo del programa -----")
     exit()
 
